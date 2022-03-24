@@ -2542,7 +2542,7 @@ bool ZedCamera::startCamera()
     // Initialialized timestamp to avoid wrong initial data
     // ----> Timestamp
     if (mSvoMode) {
-        mFrameTimestamp = sl_tools::slTime2Ros(mZed.getTimestamp(sl::TIME_REFERENCE::CURRENT));
+        mFrameTimestamp = sl_tools::slTime2Ros(mZed.getTimestamp(sl::TIME_REFERENCE::IMAGE));
     } else {
         mFrameTimestamp = sl_tools::slTime2Ros(mZed.getTimestamp(sl::TIME_REFERENCE::IMAGE));
     }
@@ -3529,7 +3529,7 @@ void ZedCamera::threadFunc_zedGrab()
 
             // ----> Timestamp
             if (mSvoMode) {
-                mFrameTimestamp = sl_tools::slTime2Ros(mZed.getTimestamp(sl::TIME_REFERENCE::CURRENT));
+                mFrameTimestamp = sl_tools::slTime2Ros(mZed.getTimestamp(sl::TIME_REFERENCE::IMAGE));
             } else {
                 mFrameTimestamp = sl_tools::slTime2Ros(mZed.getTimestamp(sl::TIME_REFERENCE::IMAGE));
             }
@@ -4348,7 +4348,7 @@ bool ZedCamera::publishVideoDepth(rclcpp::Time& out_pub_ts)
     if (!mSvoMode) {
         timeStamp = sl_tools::slTime2Ros(grab_ts, get_clock()->get_clock_type());
     } else {
-        timeStamp = sl_tools::slTime2Ros(mZed.getTimestamp(sl::TIME_REFERENCE::CURRENT),
+        timeStamp = sl_tools::slTime2Ros(mZed.getTimestamp(sl::TIME_REFERENCE::IMAGE),
             get_clock()->get_clock_type());
     }
 
@@ -5192,7 +5192,7 @@ void ZedCamera::publishPointCloud()
     if (!mSvoMode) {
         pcMsg->header.stamp = sl_tools::slTime2Ros(mMatCloud.timestamp);
     } else {
-        pcMsg->header.stamp = sl_tools::slTime2Ros(mZed.getTimestamp(sl::TIME_REFERENCE::CURRENT));
+        pcMsg->header.stamp = sl_tools::slTime2Ros(mZed.getTimestamp(sl::TIME_REFERENCE::IMAGE));
         ;
     }
 
